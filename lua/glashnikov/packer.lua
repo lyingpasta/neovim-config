@@ -27,7 +27,7 @@ return require('packer').startup(function(use)
 
 	-- harpoon
 	use('theprimeagen/harpoon')
-	
+
 	-- undotree
 	use('mbbill/undotree')
 
@@ -128,4 +128,12 @@ return require('packer').startup(function(use)
 
       vim.cmd([[nnoremap \ :Neotree reveal<cr>]])
   end }
+
+  -- comment
+  use {
+      'numToStr/Comment.nvim',
+      config = function()
+          require('Comment').setup()
+      end
+  }
 end)
