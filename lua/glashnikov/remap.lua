@@ -1,11 +1,14 @@
 vim.g.mapleader = " "
 
 -- explorer
-vim.keymap.set("n", "<leader>e", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>e", vim.cmd.Neotree)
 
 -- actions
 vim.keymap.set("n", "<leader>w", vim.cmd.w)
 vim.keymap.set("n", "<leader>q", vim.cmd.q)
+
+vim.keymap.set('n', '<C-l>', vim.cmd.bnext)
+vim.keymap.set('n', '<C-h>', vim.cmd.bprevious)
 
 -- macros
 vim.keymap.set('v', 'K', ":m '>-2<CR>gv=gv")
