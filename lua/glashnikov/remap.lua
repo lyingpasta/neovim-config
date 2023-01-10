@@ -10,6 +10,7 @@ vim.keymap.set("n", "<leader>lf", ":lua vim.lsp.buf.format()<CR>")
 
 vim.keymap.set('n', '<C-l>', vim.cmd.bnext)
 vim.keymap.set('n', '<C-h>', vim.cmd.bprevious)
+vim.keymap.set("n", "<leader>c", vim.cmd.bdelete)
 
 -- macros
 vim.keymap.set('v', 'K', ":m '>-2<CR>gv=gv")
