@@ -8,6 +8,7 @@ return require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 
 	-- Fuzzy finder / Telescope
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 	use {
 		'nvim-telescope/telescope.nvim', tag = '0.1.0',
 		requires = { {'nvim-lua/plenary.nvim'} }
