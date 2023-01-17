@@ -8,3 +8,13 @@ vim.keymap.set('n', '<leader>fw', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fs', builtin.grep_string, {})
 
 require('telescope').load_extension('fzf')
+
+require('telescope').setup {
+  pickers = {
+    live_grep = {
+      additional_args = function (opts)
+        return {"--hidden"}
+      end
+    }
+  }
+}
