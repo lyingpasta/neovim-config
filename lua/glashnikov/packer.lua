@@ -138,4 +138,10 @@ return require('packer').startup(function(use)
       require('Comment').setup()
     end
   }
+
+  -- navigation status bar
+  use {
+    "SmiteshP/nvim-navic",
+    requires = "neovim/nvim-lspconfig"
+  }
 end)
