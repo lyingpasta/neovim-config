@@ -1,4 +1,5 @@
 local lsp = require('lsp-zero')
+local lspconfig = require('lspconfig')
 lsp.preset('recommended')
 
 lsp.ensure_installed({
@@ -8,7 +9,18 @@ lsp.ensure_installed({
   'rust_analyzer',
 })
 
-require('lspconfig').gdscript.setup {}
+-- Lua
+lspconfig.sumneko_lua.setup {
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { "vim" }
+      }
+    }
+  }
+}
+
+lspconfig.gdscript.setup {}
 
 local cmp = require('cmp')
 local cmp_mappings = lsp.defaults.cmp_mappings({
