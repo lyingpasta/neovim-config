@@ -144,4 +144,7 @@ return require('packer').startup(function(use)
     "SmiteshP/nvim-navic",
     requires = "neovim/nvim-lspconfig"
   }
+
+  -- brackets
+  use 'm4xshen/autoclose.nvim'
 end)
