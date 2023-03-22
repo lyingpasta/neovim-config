@@ -147,4 +147,13 @@ return require('packer').startup(function(use)
 
   -- brackets
   use 'm4xshen/autoclose.nvim'
+
+  -- indent line guide
+  use "lukas-reineke/indent-blankline.nvim"
+
+  -- autopairs
+  use {
+    "windwp/nvim-autopairs",
+    config = function() require("nvim-autopairs").setup {} end
+  }
 end)
