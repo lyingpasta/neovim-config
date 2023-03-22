@@ -156,4 +156,7 @@ return require('packer').startup(function(use)
     "windwp/nvim-autopairs",
     config = function() require("nvim-autopairs").setup {} end
   }
+
+  -- wilder
+  use { 'gelguy/wilder.nvim' }
 end)
