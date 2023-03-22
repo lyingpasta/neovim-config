@@ -159,4 +159,7 @@ return require('packer').startup(function(use)
 
   -- wilder
   use { 'gelguy/wilder.nvim' }
+
+  -- glow
+  use { "ellisonleao/glow.nvim", config = function() require("glow").setup() end }
 end)
