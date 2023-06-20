@@ -11,7 +11,10 @@ return require('packer').startup(function(use)
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.0',
-    requires = { { 'nvim-lua/plenary.nvim' } }
+    requires = {
+      { 'nvim-lua/plenary.nvim' },
+      { 'nvim-telescope/telescope-live-grep-args.nvim' },
+    }
   }
 
   -- Colorscheme
@@ -25,7 +28,7 @@ return require('packer').startup(function(use)
 
   -- treesitter
   use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
-
+  use 'nvim-tree/nvim-web-devicons'
   -- harpoon
   use('theprimeagen/harpoon')
 
@@ -162,4 +165,7 @@ return require('packer').startup(function(use)
 
   -- glow
   use { "ellisonleao/glow.nvim", config = function() require("glow").setup() end }
+
+  -- illuminate
+  use { "RRethy/vim-illuminate" }
 end)
