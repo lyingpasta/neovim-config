@@ -1,3 +1,3 @@
-local comment = require("comment")
+local comment = require("Comment")
 
 comment.setup()
