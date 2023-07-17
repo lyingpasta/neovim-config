@@ -168,4 +168,7 @@ return require('packer').startup(function(use)
 
   -- illuminate
   use { "RRethy/vim-illuminate" }
+
+  -- lsp status
+  use {"j-hui/fidget.nvim"}
 end)
