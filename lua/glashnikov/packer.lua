@@ -37,6 +37,7 @@ return require('packer').startup(function(use)
 
   -- fugitive
   use({ 'lewis6991/gitsigns.nvim' })
+  use({ 'tpope/vim-fugitive' })
 
   -- LSP
   use {
@@ -170,5 +171,8 @@ return require('packer').startup(function(use)
   use { "RRethy/vim-illuminate" }
 
   -- lsp status
-  use {"j-hui/fidget.nvim"}
+  use { "j-hui/fidget.nvim", branch = 'legacy' }
+
+  -- Python
+  use { "pappasam/coc-jedi" }
 end)
