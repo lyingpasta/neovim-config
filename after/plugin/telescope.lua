@@ -6,9 +6,16 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 vim.keymap.set('n', '<leader>fw', ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
 
-require('telescope').load_extension('fzf')
 
 require('telescope').setup {
+  extensions = {
+    fzf = {
+      fuzzy = true,
+      override_generic_sorter = true,
+      override_file_sorter = true,
+      case_mode = "smart_case"
+    }
+  },
   pickers = {
     live_grep = {
       additional_args = function(opts)
@@ -17,6 +24,8 @@ require('telescope').setup {
     }
   }
 }
+
+require('telescope').load_extension('fzf')
 
 local live_grep_args_shortcuts = require('telescope-live-grep-args.shortcuts')
 vim.keymap.set('n', '<leader>fs', live_grep_args_shortcuts.grep_word_under_cursor) 

@@ -7,6 +7,9 @@
 - [Packer](): plugin manager
 - [Lsp-zero](): Language server
 - [treesitter](): Language highlight
+- [telescope](): Search 
+-- [fzf]
+-- [ripgrep]
 ## How to Installe
 Simply clone this repo into your ~/.config/nvim/ directory
 ```git clone https://github.com/glashnikov/neovim-config.git ~/.config/nvim

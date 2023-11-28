@@ -10,7 +10,7 @@ return require('packer').startup(function(use)
   -- Fuzzy finder / Telescope
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use {
-    'nvim-telescope/telescope.nvim', tag = '0.1.0',
+    'nvim-telescope/telescope.nvim', tag = '0.1.4',
     requires = {
       { 'nvim-lua/plenary.nvim' },
       { 'nvim-telescope/telescope-live-grep-args.nvim' },
@@ -49,15 +49,17 @@ return require('packer').startup(function(use)
       { 'williamboman/mason-lspconfig.nvim' },
 
       -- Autocompletion
-      { 'hrsh7th/nvim-cmp' },
       { 'hrsh7th/cmp-buffer' },
-      { 'hrsh7th/cmp-path' },
-      { 'saadparwaiz1/cmp_luasnip' },
+      { 'hrsh7th/cmp-cmdline' },
       { 'hrsh7th/cmp-nvim-lsp' },
       { 'hrsh7th/cmp-nvim-lua' },
+      { 'hrsh7th/cmp-path' },
+      { 'hrsh7th/nvim-cmp' },
 
       -- Snippets
       { 'L3MON4D3/LuaSnip' },
+      { 'saadparwaiz1/cmp_luasnip' },
+
       -- Snippet Collection (Optional)
       { 'rafamadriz/friendly-snippets' },
     }
