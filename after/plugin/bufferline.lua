@@ -1,3 +1,3 @@
-local bl = require('bufferline')
+local bl = require("bufferline")
 
 bl.setup()

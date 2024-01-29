@@ -1,114 +1,166 @@
-local lsp = require('lsp-zero')
-local lspconfig = require('lspconfig')
+-- Required modules
+local lsp = require("lsp-zero")
+local lspconfig = require("lspconfig")
+local cmp = require("cmp")
+local luasnip = require("luasnip")
 
+-- LSP on_attach function
+local function lsp_on_attach(client, bufnr)
+	local keymap = vim.keymap.set
+	local opts = { buffer = bufnr, remap = false }
 
-lsp.on_attach(function(client, bufnr)
-  local opts = { buffer = bufnr, remap = false }
+	-- Key mappings for various LSP functions
+	keymap.set("n", "gd", function()
+		vim.lsp.buf.definition()
+	end, opts)
+	keymap.set("n", "K", function()
+		vim.lsp.buf.hover()
+	end, opts)
+	keymap.set("n", "<leader>lws", function()
+		vim.lsp.buf.workspace_symbol()
+	end, opts)
+	keymap.set("n", "<leader>ld", function()
+		vim.diagnostic.open_float()
+	end, opts)
+	keymap.set("n", "[d", function()
+		vim.diagnostic.goto_next()
+	end, opts)
+	keymap.set("n", "]d", function()
+		vim.diagnostic.goto_prev()
+	end, opts)
+	keymap.set("n", "<leader>lca", function()
+		vim.lsp.buf.code_action()
+	end, opts)
+	keymap.set("n", "<leader>lrr", function()
+		vim.lsp.buf.references()
+	end, opts)
+	keymap.set("n", "<leader>lrn", function()
+		vim.lsp.buf.rename()
+	end, opts)
+	keymap.set("n", "<leader>lh", function()
+		vim.lsp.buf.signature_help()
+	end, opts)
+end
 
-  vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
-  vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
-  vim.keymap.set('n', '<leader>lws', function() vim.lsp.buf.workspace_symbol() end, opts)
-  vim.keymap.set('n', '<leader>ld', function() vim.diagnostic.open_float() end, opts)
-  vim.keymap.set('n', '[d', function() vim.diagnostic.goto_next() end, opts)
-  vim.keymap.set('n', ']d', function() vim.diagnostic.goto_prev() end, opts)
-  vim.keymap.set('n', '<leader>lca', function() vim.lsp.buf.code_action() end, opts)
-  vim.keymap.set('n', '<leader>lrr', function() vim.lsp.buf.references() end, opts)
-  vim.keymap.set('n', '<leader>lrn', function() vim.lsp.buf.rename() end, opts)
-  vim.keymap.set('n', '<leader>lh', function() vim.lsp.buf.signature_help() end, opts)
-end)
-
+-- LSP setup
+lsp.preset("recommended")
 lsp.setup()
 
-require('mason').setup({})
-require('mason-lspconfig').setup({
-  ensure_installed = {'tsserver', 'rust_analyzer'},
-  hanlers = {
-    lsp.default_setup,
-    lua_ls = function()
-      local lua_opts = lsp_zero.nvim_lua_ls()
-      require('lsp-config').lua_ls.setup(lua_opts)
-    end,
-  },
+-- Auto-detect WGSL files
+vim.filetype.add({
+	extension = {
+		wgsl = "wgsl",
+	},
 })
 
-lspconfig.gdscript.setup {}
-
-local cmp = require('cmp')
-local cmp_mappings = lsp.defaults.cmp_mappings({
-  ['<C-Space>'] = cmp.mapping.complete(),
+-- Mason setup
+require("mason").setup({})
+require("mason-lspconfig").setup({
+	ensure_installed = { "tsserver", "rust_analyzer", "wgsl_analyzer", "svelte", "eslint", "tailwindcss", "html" },
+	automatic_installation = true,
 })
+
+-- CMP (completion-nvim) configuration
+local cmp = require("cmp")
+local cmp_config = cmp.config
+local cmp_mapping = cmp.mapping
+local cmp_sources = cmp_config.sources
 
 cmp.setup({
-    snippet = {
-      -- REQUIRED - you must specify a snippet engine
-      expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-      end,
-    },
-    window = {
-      -- completion = cmp.config.window.bordered(),
-      -- documentation = cmp.config.window.bordered(),
-    },
-    mapping = cmp.mapping.preset.insert({
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    }),
-    sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      { name = 'vsnip' }, -- For vsnip users.
-      -- { name = 'luasnip' }, -- For luasnip users.
-      -- { name = 'ultisnips' }, -- For ultisnips users.
-      -- { name = 'snippy' }, -- For snippy users.
-    }, {
-      { name = 'buffer' },
-    })
-  })
+	snippet = {
+		expand = function(args)
+			luasnip.lsp_expand(args.body)
+		end,
+	},
+	mapping = cmp.mapping.preset.insert({
+		-- Key mappings for CMP
+		["<C-b>"] = cmp_mapping.scroll_docs(-4),
+		["<C-f>"] = cmp_mapping.scroll_docs(4),
+		["<C-Space>"] = cmp_mapping.complete(),
+		["<C-e>"] = cmp_mapping.abort(),
+		["<CR>"] = cmp_mapping.confirm({ select = true }),
+		["<Tab>"] = cmp_mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif luasnip.expand_or_jumpable() then
+				luasnip.expand_or_jump()
+			elseif has_words_before() then
+				cmp.complete()
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+		["<S-Tab>"] = cmp_mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			elseif luasnip.jumpable(-1) then
+				luasnip.jump(-1)
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+	}),
+	sources = cmp.config.sources({
+		{ name = "nvim_lsp" },
+		{ name = "luasnip" },
+	}, {
+		{ name = "buffer" },
+	}),
+	-- Other CMP configurations
+	-- ...
+})
 
-  -- Set configuration for specific filetype.
-  cmp.setup.filetype('gitcommit', {
-    sources = cmp.config.sources({
-      { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
-    }, {
-      { name = 'buffer' },
-    })
-  })
+-- LSP server configurations
+local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline({ '/', '?' }, {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-      { name = 'buffer' }
-    }
-  })
+-- Rust Analyzer
+lspconfig.rust_analyzer.setup({
+	on_attach = lsp_on_attach,
+	capabilities = capabilities,
+	-- Additional Rust-specific configurations
+	settings = {
+		["rust-analyzer"] = {
+			cargo = { allFeatures = true },
+			checkOnSave = {
+				command = "clippy",
+			},
+		},
+	},
+})
 
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    })
-  })
+-- WGSL Analyzer (Note: Adjust according to the actual LSP for WGSL)
+lspconfig.wgsl_analyzer.setup({
+	on_attach = lsp_on_attach,
+	capabilities = capabilities,
+	-- Additional WGSL-specific configurations (if any)
+})
 
-  -- Set up lspconfig.
-  local capabilities = require('cmp_nvim_lsp').default_capabilities()
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  require('lspconfig')['rust_analyzer'].setup {
-    capabilities = capabilities
-  }
+-- GDScript
+lspconfig.gdscript.setup({
+	on_attach = lsp_on_attach,
+	capabilities = capabilities,
+	-- Additional GDScript-specific configurations (if any)
+})
 
+-- Typescript
+lspconfig.tsserver.setup({})
+lspconfig.eslint.setup({})
+
+-- Svelte
+lspconfig.svelte.setup({})
+
+-- Tailwind
+lspconfig.tailwindcss.setup({})
+
+-- Tailwind
+lspconfig.html.setup({})
+
+-- Diagnostic configurations
 vim.diagnostic.config({
-  virtual_text = true,
-  signs = true,
-  update_in_insert = false,
-  underline = true,
-  severity_sort = true,
-  float = true,
+	virtual_text = true,
+	signs = true,
+	update_in_insert = false,
+	underline = true,
+	severity_sort = true,
+	float = true,
 })
