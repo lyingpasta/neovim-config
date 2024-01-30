@@ -185,7 +185,7 @@ return require("packer").startup(function(use)
 	use({ "RRethy/vim-illuminate" })
 
 	-- lsp status
-	use({ "j-hui/fidget.nvim", branch = "legacy" })
+	use({ "j-hui/fidget.nvim" })
 
 	-- Python
 	use({ "pappasam/coc-jedi" })
