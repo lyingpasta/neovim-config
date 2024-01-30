@@ -6,40 +6,40 @@ local luasnip = require("luasnip")
 
 -- LSP on_attach function
 local function lsp_on_attach(client, bufnr)
-	local keymap = vim.keymap.set
-	local opts = { buffer = bufnr, remap = false }
+  local keymap = vim.keymap
+  local opts = { buffer = bufnr, remap = false }
 
-	-- Key mappings for various LSP functions
-	keymap.set("n", "gd", function()
-		vim.lsp.buf.definition()
-	end, opts)
-	keymap.set("n", "K", function()
-		vim.lsp.buf.hover()
-	end, opts)
-	keymap.set("n", "<leader>lws", function()
-		vim.lsp.buf.workspace_symbol()
-	end, opts)
-	keymap.set("n", "<leader>ld", function()
-		vim.diagnostic.open_float()
-	end, opts)
-	keymap.set("n", "[d", function()
-		vim.diagnostic.goto_next()
-	end, opts)
-	keymap.set("n", "]d", function()
-		vim.diagnostic.goto_prev()
-	end, opts)
-	keymap.set("n", "<leader>lca", function()
-		vim.lsp.buf.code_action()
-	end, opts)
-	keymap.set("n", "<leader>lrr", function()
-		vim.lsp.buf.references()
-	end, opts)
-	keymap.set("n", "<leader>lrn", function()
-		vim.lsp.buf.rename()
-	end, opts)
-	keymap.set("n", "<leader>lh", function()
-		vim.lsp.buf.signature_help()
-	end, opts)
+  -- Key mappings for various LSP functions
+  keymap.set("n", "gd", function()
+    vim.lsp.buf.definition()
+  end, opts)
+  keymap.set("n", "K", function()
+    vim.lsp.buf.hover()
+  end, opts)
+  keymap.set("n", "<leader>lws", function()
+    vim.lsp.buf.workspace_symbol()
+  end, opts)
+  keymap.set("n", "<leader>ld", function()
+    vim.diagnostic.open_float()
+  end, opts)
+  keymap.set("n", "[d", function()
+    vim.diagnostic.goto_next()
+  end, opts)
+  keymap.set("n", "]d", function()
+    vim.diagnostic.goto_prev()
+  end, opts)
+  keymap.set("n", "<leader>lca", function()
+    vim.lsp.buf.code_action()
+  end, opts)
+  keymap.set("n", "<leader>lrr", function()
+    vim.lsp.buf.references()
+  end, opts)
+  keymap.set("n", "<leader>lrn", function()
+    vim.lsp.buf.rename()
+  end, opts)
+  keymap.set("n", "<leader>lh", function()
+    vim.lsp.buf.signature_help()
+  end, opts)
 end
 
 -- LSP setup
@@ -48,16 +48,16 @@ lsp.setup()
 
 -- Auto-detect WGSL files
 vim.filetype.add({
-	extension = {
-		wgsl = "wgsl",
-	},
+  extension = {
+    wgsl = "wgsl",
+  },
 })
 
 -- Mason setup
 require("mason").setup({})
 require("mason-lspconfig").setup({
-	ensure_installed = { "tsserver", "rust_analyzer", "wgsl_analyzer", "svelte", "eslint", "tailwindcss", "html" },
-	automatic_installation = true,
+  ensure_installed = { "lua_ls", "tsserver", "rust_analyzer", "wgsl_analyzer", "svelte", "eslint", "tailwindcss", "html" },
+  automatic_installation = true,
 })
 
 -- CMP (completion-nvim) configuration
@@ -67,100 +67,127 @@ local cmp_mapping = cmp.mapping
 local cmp_sources = cmp_config.sources
 
 cmp.setup({
-	snippet = {
-		expand = function(args)
-			luasnip.lsp_expand(args.body)
-		end,
-	},
-	mapping = cmp.mapping.preset.insert({
-		-- Key mappings for CMP
-		["<C-b>"] = cmp_mapping.scroll_docs(-4),
-		["<C-f>"] = cmp_mapping.scroll_docs(4),
-		["<C-Space>"] = cmp_mapping.complete(),
-		["<C-e>"] = cmp_mapping.abort(),
-		["<CR>"] = cmp_mapping.confirm({ select = true }),
-		["<Tab>"] = cmp_mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
-			elseif has_words_before() then
-				cmp.complete()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-		["<S-Tab>"] = cmp_mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-			elseif luasnip.jumpable(-1) then
-				luasnip.jump(-1)
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-	}),
-	sources = cmp.config.sources({
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
-	}, {
-		{ name = "buffer" },
-	}),
-	-- Other CMP configurations
-	-- ...
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    -- Key mappings for CMP
+    ["<C-b>"] = cmp_mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp_mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp_mapping.complete(),
+    ["<C-e>"] = cmp_mapping.abort(),
+    ["<CR>"] = cmp_mapping.confirm({ select = true }),
+    ["<Tab>"] = cmp_mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp_mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+  }),
+  sources = cmp.config.sources({
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
+  }, {
+    { name = "buffer" },
+  }),
+  -- Other CMP configurations
+  -- ...
 })
 
 -- LSP server configurations
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+-- Lua
+lspconfig.lua_ls.setup({
+  on_attach = lsp_on_attach,
+  capabilities = capabilities,
+  -- Additional WGSL-specific configurations (if any)
+})
+
 -- Rust Analyzer
 lspconfig.rust_analyzer.setup({
-	on_attach = lsp_on_attach,
-	capabilities = capabilities,
-	-- Additional Rust-specific configurations
-	settings = {
-		["rust-analyzer"] = {
-			cargo = { allFeatures = true },
-			checkOnSave = {
-				command = "clippy",
-			},
-		},
-	},
+  on_attach = lsp_on_attach,
+  capabilities = capabilities,
+  -- Additional Rust-specific configurations
+  settings = {
+    ["rust-analyzer"] = {
+      cargo = { allFeatures = true },
+      checkOnSave = {
+        command = "clippy",
+      },
+    },
+  },
 })
 
 -- WGSL Analyzer (Note: Adjust according to the actual LSP for WGSL)
 lspconfig.wgsl_analyzer.setup({
-	on_attach = lsp_on_attach,
-	capabilities = capabilities,
-	-- Additional WGSL-specific configurations (if any)
+  on_attach = lsp_on_attach,
+  capabilities = capabilities,
+  -- Additional WGSL-specific configurations (if any)
 })
 
 -- GDScript
 lspconfig.gdscript.setup({
-	on_attach = lsp_on_attach,
-	capabilities = capabilities,
-	-- Additional GDScript-specific configurations (if any)
+  on_attach = lsp_on_attach,
+  capabilities = capabilities,
+  -- Additional GDScript-specific configurations (if any)
 })
 
 -- Typescript
-lspconfig.tsserver.setup({})
-lspconfig.eslint.setup({})
+lspconfig.tsserver.setup({
+  on_attach = lsp_on_attach,
+  capabilities = capabilities,
+  -- Additional GDScript-specific configurations (if any)
+})
+lspconfig.eslint.setup({
+  on_attach = lsp_on_attach,
+  capabilities = capabilities,
+  -- Additional GDScript-specific configurations (if any)
+})
 
 -- Svelte
-lspconfig.svelte.setup({})
+lspconfig.svelte.setup({
+  on_attach = lsp_on_attach,
+  capabilities = capabilities,
+  -- Additional GDScript-specific configurations (if any)
+})
 
 -- Tailwind
-lspconfig.tailwindcss.setup({})
+lspconfig.tailwindcss.setup({
+  on_attach = lsp_on_attach,
+  capabilities = capabilities,
+  -- Additional GDScript-specific configurations (if any)
+})
 
 -- Tailwind
-lspconfig.html.setup({})
+lspconfig.html.setup({
+  on_attach = lsp_on_attach,
+  capabilities = capabilities,
+  -- Additional GDScript-specific configurations (if any)
+})
 
 -- Diagnostic configurations
 vim.diagnostic.config({
-	virtual_text = true,
-	signs = true,
-	update_in_insert = false,
-	underline = true,
-	severity_sort = true,
-	float = true,
+  virtual_text = true,
+  signs = true,
+  update_in_insert = false,
+  underline = true,
+  severity_sort = true,
+  float = true,
 })
