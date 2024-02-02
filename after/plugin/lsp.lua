@@ -1,7 +1,6 @@
 -- Required modules
 local lsp = require("lsp-zero")
 local lspconfig = require("lspconfig")
-local cmp = require("cmp")
 local luasnip = require("luasnip")
 
 -- LSP on_attach function
@@ -56,15 +55,22 @@ vim.filetype.add({
 -- Mason setup
 require("mason").setup({})
 require("mason-lspconfig").setup({
-  ensure_installed = { "lua_ls", "tsserver", "rust_analyzer", "wgsl_analyzer", "svelte", "eslint", "tailwindcss", "html" },
+  ensure_installed = {
+    "eslint",
+    "html",
+    "lua_ls",
+    "rust_analyzer",
+    "svelte",
+    "tailwindcss",
+    "tsserver",
+    "wgsl_analyzer",
+  },
   automatic_installation = true,
 })
 
 -- CMP (completion-nvim) configuration
 local cmp = require("cmp")
-local cmp_config = cmp.config
 local cmp_mapping = cmp.mapping
-local cmp_sources = cmp_config.sources
 
 cmp.setup({
   snippet = {
@@ -84,8 +90,6 @@ cmp.setup({
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
-      elseif has_words_before() then
-        cmp.complete()
       else
         fallback()
       end
@@ -111,7 +115,7 @@ cmp.setup({
 })
 
 -- LSP server configurations
-local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- Lua
 lspconfig.lua_ls.setup({
