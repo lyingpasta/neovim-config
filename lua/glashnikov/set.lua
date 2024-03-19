@@ -10,6 +10,11 @@ vim.opt.expandtab = true
 
 vim.opt.smartindent = true
 
+-- Set the characters for displaying spaces, tabs, etc.
+vim.opt.listchars = "space:·,tab:<->,trail:␣"
+-- Enable the listchars setting
+vim.opt.list = true
+
 vim.opt.wrap = true
 
 -- undo
