@@ -3,6 +3,14 @@ local lsp = require("lsp-zero")
 local lspconfig = require("lspconfig")
 local luasnip = require("luasnip")
 
+function eslint_or_lsp_format()
+  if vim.fn.exists(":EslintFixAll") ~= 0 then
+    vim.cmd("EslintFixAll")
+  else
+    vim.lsp.buf.format()
+  end
+end
+
 -- LSP on_attach function
 local function lsp_on_attach(client, bufnr)
   local keymap = vim.keymap
@@ -18,9 +26,7 @@ local function lsp_on_attach(client, bufnr)
   keymap.set("n", "<leader>lws", function()
     vim.lsp.buf.workspace_symbol()
   end, opts)
-  vim.keymap.set("n", "<leader>lf", function() 
-    vim.lsp.buf.format() 
-  end, opts)
+  vim.keymap.set("n", "<leader>lf", eslint_or_lsp_format, opts)
   keymap.set("n", "<leader>ld", function()
     vim.diagnostic.open_float()
   end, opts)
