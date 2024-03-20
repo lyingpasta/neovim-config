@@ -6,7 +6,6 @@ vim.keymap.set("n", "<leader>e", vim.cmd.Neotree)
 -- actions
 vim.keymap.set("n", "<leader>w", vim.cmd.w)
 vim.keymap.set("n", "<leader>q", vim.cmd.q)
-vim.keymap.set("n", "<leader>lf", vim.cmd.LspZeroFormat)
 vim.keymap.set("n", "gl", ":lua vim.diagnostic.open_float()<CR>")
 
 vim.keymap.set("n", "<C-l>", vim.cmd.bnext)
