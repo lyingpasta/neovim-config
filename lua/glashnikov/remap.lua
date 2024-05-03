@@ -24,4 +24,6 @@ vim.keymap.set("n", "U", vim.cmd.redo)
 vim.keymap.set("x", "<leader>p", '"_dP')
 
 vim.keymap.set("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-vim.keymap.set("n", "<leader>s", [[/<C-r><C-w><CR>]])
+vim.keymap.set("n", "<leader>se", [[/<C-r><C-w><CR>]])
+vim.keymap.set("n", "<leader>sw", [[/\<<C-r><C-w>\><CR>]])
+
