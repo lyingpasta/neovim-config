@@ -6,6 +6,8 @@ local luasnip = require("luasnip")
 function eslint_or_lsp_format()
   if vim.fn.exists(":EslintFixAll") ~= 0 then
     vim.cmd("EslintFixAll")
+  elseif vim.fn.exists(":LspZeroFormat") ~= 0 then
+    vim.cmd("LspZeroFormat")
   else
     vim.lsp.buf.format()
   end
