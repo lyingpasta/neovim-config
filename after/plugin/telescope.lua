@@ -28,3 +28,5 @@ require("telescope").load_extension("fzf")
 
 local live_grep_args_shortcuts = require("telescope-live-grep-args.shortcuts")
 vim.keymap.set("n", "<leader>fs", live_grep_args_shortcuts.grep_word_under_cursor)
+vim.keymap.set("n", "gr", builtin.lsp_references, { desc = "Go to references" })
+  
