@@ -1,3 +1,3 @@
 require("ibl").setup({
-	-- for example, context is off by default, use this to turn it on
+  -- for example, context is off by default, use this to turn it on
 })

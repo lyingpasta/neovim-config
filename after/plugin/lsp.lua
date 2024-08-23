@@ -133,6 +133,13 @@ lspconfig.lua_ls.setup({
   on_attach = lsp_on_attach,
   capabilities = capabilities,
   -- Additional WGSL-specific configurations (if any)
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { "vim" },
+      },
+    },
+  },
 })
 
 -- Rust Analyzer
