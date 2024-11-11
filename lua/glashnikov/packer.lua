@@ -197,4 +197,7 @@ return require("packer").startup(function(use)
 
   -- comment
   use { 'numToStr/Comment.nvim' }
+
+  -- RandWord
+  use { "kungfusheep/randomword.nvim" }
 end)

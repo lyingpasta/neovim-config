@@ -3,7 +3,7 @@ local lsp = require("lsp-zero")
 local lspconfig = require("lspconfig")
 local luasnip = require("luasnip")
 
-function eslint_or_lsp_format()
+local function eslint_or_lsp_format()
   if vim.fn.exists(":EslintFixAll") ~= 0 then
     vim.cmd("EslintFixAll")
   elseif vim.fn.exists(":LspZeroFormat") ~= 0 then
@@ -14,7 +14,7 @@ function eslint_or_lsp_format()
 end
 
 -- LSP on_attach function
-local function lsp_on_attach(client, bufnr)
+local function lsp_on_attach(_client, bufnr)
   local keymap = vim.keymap
 
   -- Key mappings for various LSP functions
@@ -69,7 +69,7 @@ require("mason-lspconfig").setup({
     "rust_analyzer",
     "svelte",
     "tailwindcss",
-    "tsserver",
+    "ts_ls",
     "wgsl_analyzer",
   },
   automatic_installation = true,
@@ -168,7 +168,7 @@ lspconfig.gdscript.setup({
 })
 
 -- Typescript
-lspconfig.tsserver.setup({
+lspconfig.ts_ls.setup({
   on_attach = lsp_on_attach,
   capabilities = capabilities,
   -- Additional GDScript-specific configurations (if any)
