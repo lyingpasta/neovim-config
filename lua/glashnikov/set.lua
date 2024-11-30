@@ -11,7 +11,7 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 
 -- Set the characters for displaying spaces, tabs, etc.
-vim.opt.listchars = "space:·,tab:<->,trail:␣"
+vim.opt.listchars = "space:·,tab:| ,trail:␣"
 -- Enable the listchars setting
 vim.opt.list = true
 
@@ -41,3 +41,4 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "120"
 
 vim.g.mapleader = " "
+
