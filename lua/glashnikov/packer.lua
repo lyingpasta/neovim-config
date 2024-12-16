@@ -11,7 +11,7 @@ return require("packer").startup(function(use)
   use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
   use({
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.5",
+    -- tag = "0.1.5",
     requires = {
       { "nvim-lua/plenary.nvim" },
       { "nvim-telescope/telescope-live-grep-args.nvim" },
@@ -93,7 +93,11 @@ return require("packer").startup(function(use)
   })
 
   -- buffer line
-  use({ "akinsho/bufferline.nvim", tag = "v3.*", requires = "nvim-tree/nvim-web-devicons" })
+  use({
+    "akinsho/bufferline.nvim",
+    -- tag = "v3.*",
+    requires = "nvim-tree/nvim-web-devicons"
+  })
 
   -- neotree
   use({
@@ -106,7 +110,7 @@ return require("packer").startup(function(use)
       {
         -- only needed if you want to use the commands with "_with_window_picker" suffix
         "s1n7ax/nvim-window-picker",
-        tag = "v1.*",
+        -- tag = "v1.*",
         config = function()
           require("window-picker").setup({
             autoselect_one = true,
@@ -194,9 +198,6 @@ return require("packer").startup(function(use)
   use("karb94/neoscroll.nvim")
   -- Python
   use({ "pappasam/coc-jedi" })
-
-  -- comment
-  use { 'numToStr/Comment.nvim' }
 
   -- RandWord
   use { "kungfusheep/randomword.nvim" }
