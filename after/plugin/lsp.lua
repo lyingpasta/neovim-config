@@ -63,7 +63,6 @@ vim.filetype.add({
 require("mason").setup({})
 require("mason-lspconfig").setup({
   ensure_installed = {
-    "eslint",
     "html",
     "lua_ls",
     "rust_analyzer",
@@ -164,41 +163,29 @@ lspconfig.wgsl_analyzer.setup({
 lspconfig.gdscript.setup({
   on_attach = lsp_on_attach,
   capabilities = capabilities,
-  -- Additional GDScript-specific configurations (if any)
 })
 
 -- Typescript
 lspconfig.ts_ls.setup({
   on_attach = lsp_on_attach,
   capabilities = capabilities,
-  -- Additional GDScript-specific configurations (if any)
 })
-lspconfig.eslint.setup({
-  on_attach = lsp_on_attach,
-  capabilities = capabilities,
-  -- Additional GDScript-specific configurations (if any)
-})
-
 -- Svelte
 lspconfig.svelte.setup({
   on_attach = lsp_on_attach,
   capabilities = capabilities,
-  -- Additional GDScript-specific configurations (if any)
-})
-
--- Tailwind
-lspconfig.tailwindcss.setup({
-  on_attach = lsp_on_attach,
-  capabilities = capabilities,
-  -- Additional GDScript-specific configurations (if any)
 })
 
 -- Tailwind
 lspconfig.html.setup({
   on_attach = lsp_on_attach,
   capabilities = capabilities,
-  -- Additional GDScript-specific configurations (if any)
 })
+lspconfig.tailwindcss.setup({
+  on_attach = lsp_on_attach,
+  capabilities = capabilities,
+})
+
 
 -- Diagnostic configurations
 vim.diagnostic.config({

@@ -196,8 +196,6 @@ return require("packer").startup(function(use)
 
   -- NeoScroll
   use("karb94/neoscroll.nvim")
-  -- Python
-  use({ "pappasam/coc-jedi" })
 
   -- RandWord
   use { "kungfusheep/randomword.nvim" }
