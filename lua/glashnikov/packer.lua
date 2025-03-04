@@ -199,4 +199,22 @@ return require("packer").startup(function(use)
 
   -- RandWord
   use { "kungfusheep/randomword.nvim" }
+
+  -- Avante.nvim with build process
+  -- Required plugins
+  use 'stevearc/dressing.nvim'
+  use 'MeanderingProgrammer/render-markdown.nvim'
+
+  -- Optional dependencies
+  use 'HakonHarnes/img-clip.nvim'
+  use 'zbirenbaum/copilot.lua'
+
+  use {
+    'yetone/avante.nvim',
+    branch = 'main',
+    run = 'make',
+    config = function()
+      require('avante').setup()
+    end
+  }
 end)
