@@ -8,10 +8,12 @@ return require("packer").startup(function(use)
   use("wbthomason/packer.nvim")
 
   -- Fuzzy finder / Telescope
-  use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
+  use({
+    "nvim-telescope/telescope-fzf-native.nvim",
+    run = "make",
+  })
   use({
     "nvim-telescope/telescope.nvim",
-    -- tag = "0.1.5",
     requires = {
       { "nvim-lua/plenary.nvim" },
       { "nvim-telescope/telescope-live-grep-args.nvim" },
@@ -164,7 +166,12 @@ return require("packer").startup(function(use)
   use("m4xshen/autoclose.nvim")
 
   -- indent line guide
-  use("lukas-reineke/indent-blankline.nvim")
+  use({
+    "lukas-reineke/indent-blankline.nvim",
+    config = function()
+      require("ibl").setup()
+    end,
+  })
 
   -- autopairs
   use({

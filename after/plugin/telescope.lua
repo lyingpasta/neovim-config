@@ -17,7 +17,7 @@ require("telescope").setup({
   },
   pickers = {
     live_grep = {
-      additional_args = function(opts)
+      additional_args = function()
         return { "--hidden" }
       end,
     },
@@ -25,8 +25,8 @@ require("telescope").setup({
 })
 
 require("telescope").load_extension("fzf")
+require("telescope").load_extension("live_grep_args")
 
 local live_grep_args_shortcuts = require("telescope-live-grep-args.shortcuts")
 vim.keymap.set("n", "<leader>fs", live_grep_args_shortcuts.grep_word_under_cursor)
 vim.keymap.set("n", "gr", builtin.lsp_references, { desc = "Go to references" })
-  

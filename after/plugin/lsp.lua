@@ -49,7 +49,6 @@ local function lsp_on_attach(_client, bufnr)
 end
 
 -- LSP setup
-lsp.preset("recommended")
 lsp.setup()
 
 -- Auto-detect WGSL files
